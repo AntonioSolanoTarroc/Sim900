@@ -17,6 +17,12 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/*
+ 
+ Modified by Antonio Solano Tarroc for the gBoardPRO, 2014
+ 
+*/ 
+
 #ifndef __SIM_900_H__
 #define __SIM_900_H__
 
@@ -61,8 +67,6 @@
 //#else
 //#include "WProgram.h"
 //#endif
-
-#include <SoftwareSerial.h>
 
 
 static bool   SIM900_DEBUG_OUTPUT = false;
@@ -145,7 +149,6 @@ class Sim900
 {
 	private:
 		Stream* _serial;
-		SoftwareSerial* _ser;
 		int _error_condition;
 		int _powerPin;
 		int _statusPin;
@@ -166,7 +169,6 @@ class Sim900
 		bool is_valid_connection_settings(CONN settings);
 		void handle_varient(MODEM_VARIANT varient);
 	public:
-		Sim900(SoftwareSerial* serial, int baud_rate, int powerPin, int statusPin,  enum MODEM_VARIANT varient);
 		Sim900(HardwareSerial* serial, int baud_rate, int powerPin, int statusPin,  enum MODEM_VARIANT varient);
 
 		MODEM_VARIANT get_varient();
@@ -217,6 +219,9 @@ class GPRSHTTP : public Stream
 		//If the response from the server does not have a Content-Length header
 		//then length will always be zero.
 		bool post(int &cid, int &HTTP_CODE, int32_t &length);
+		bool get(int &cid, int &HTTP_CODE, int32_t &length);
+		bool head(int &cid, int &HTTP_CODE, int32_t &length);
+
 		int init_retrieve();
 		int get_error_condition();
 		bool terminate();
